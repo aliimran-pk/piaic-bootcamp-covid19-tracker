@@ -11,6 +11,8 @@ Steps to add the project into Github
   yarn add @material-ui/core 
   yarn add @material-ui/icons
   npm install fontsource-roboto
+  yarn add react-countup
+  npm install --save moment react-moment
 5) push repository
 
  Note: 

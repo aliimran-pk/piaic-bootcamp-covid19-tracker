@@ -3,6 +3,10 @@ import React, { useState , useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import CountUp from "react-countup";
+import moment from "moment";
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,60 +33,67 @@ export default function GlobalData() {
     const classes = useStyles();
     const typeGraphyclasses = useStylesTypography();
 
-    const[GlobalData,setGlobalData] = useState();
-
+    const[globalData,setGlobalData] = useState({});
+    const [dataLoading,setDataLoading] = useState(false);
+    
+    const dateMsg = " As of " +  moment().format("DD-MM-YYYY hh:mm:ss");
     useEffect(() => {
         async function fetchGlobalApiData()
         {
-            const apiResponse = await fetch('https://thevirustracker.com/free-api?global=stats', { mode: 'no-cors' });
-            //const apiResponse  = await fetch("https://c19stats.now.sh/api/countries");
-            console.log("API Data: ", apiResponse);
-            const apiJsonData = apiResponse.json();
-            //alert(apiJsonData);
-            setGlobalData(apiJsonData);            
+            const apiResponse = await fetch('https://api.thevirustracker.com/free-api?global=stats');            
+           // console.log("API Data: ", apiResponse);
+           setDataLoading(true);
+            let apiJsonData = await apiResponse.json();
+            delete apiJsonData.results[0].source;
+            setGlobalData(apiJsonData.results[0]);            
+            //console.log(apiJsonData);
+            setDataLoading(false);
         }
         fetchGlobalApiData();
     },[])
 
+
   return (
     <div className={classes.root}>
       <Paper elevation={3} >
-      <Typography variant="h2" gutterBottom>
-        1000
-      </Typography>
-      <div className={typeGraphyclasses.root}>
-        <Typography variant="body1" gutterBottom>
-            Global Count
+        <Typography variant="h2" gutterBottom style = {{color: 'darkgrey'}}>      
+          <CountUp start={0} end={globalData && isNaN(globalData.total_cases ) ? 0 : globalData.total_cases} duration={1.75} separator="," />
         </Typography>
-      </div> 
+        <div className={typeGraphyclasses.root}>
+          <Typography variant="body1" gutterBottom style = {{color: 'darkgrey'}}>
+          GLOBAL COUNT  {dateMsg}
+          </Typography>
+        </div> 
       </Paper>
+      
       <Paper elevation={3} >
-      <Typography variant="h2" gutterBottom style = {{color: 'Blue'}} > 
-        1000
-      </Typography>
-      <div className={typeGraphyclasses.root}>
-        <Typography variant="body1" gutterBottom  style = {{color: 'Blue'}}>
-            Active
+        <Typography variant="h2" gutterBottom style = {{color: 'Blue'}} > 
+         <CountUp start={0} end={globalData && isNaN(globalData.total_unresolved) ? 0 : globalData.total_unresolved} duration={1.75} separator="," />
         </Typography>
-      </div> 
-      </Paper>
+        <div className={typeGraphyclasses.root}>
+          <Typography variant="body1" gutterBottom  style = {{color: 'Blue'}}>
+              TOTAL ACTIVE {dateMsg}
+          </Typography>
+        </div> 
+        </Paper>
+      
       <Paper elevation={3} >
       <Typography variant="h2" gutterBottom style = {{color: 'Green'}}>
-        1000
+      <CountUp start={0} end={globalData && isNaN(globalData.total_recovered) ? 0 : globalData.total_recovered} duration={1.75} separator="," />
       </Typography>
       <div className={typeGraphyclasses.root}>
         <Typography variant="body1" gutterBottom style = {{color: 'Green'}}>
-            Recovered
+            TOTAL RECOVERED  {dateMsg}
         </Typography>
       </div> 
       </Paper>
       <Paper elevation={3} >
       <Typography variant="h2" gutterBottom style = {{color: 'Red'}}>
-        1000
+      <CountUp start={0} end={globalData && isNaN(globalData.total_deaths) ? 0 : globalData.total_deaths} duration={1.75} separator="," />
       </Typography>
       <div className={typeGraphyclasses.root}>
         <Typography variant="body1" gutterBottom style = {{color: 'Red'}}> 
-            Fatallities
+            TOTAL FATALLITIES {dateMsg}
         </Typography>
       </div> 
       </Paper>
