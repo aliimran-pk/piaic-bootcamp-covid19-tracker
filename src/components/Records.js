@@ -1,4 +1,5 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState , useEffect , useContext} from 'react';
+import { GlobalContext } from '../context/GlobalContext';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -28,36 +29,39 @@ const useStylesTypography = makeStyles((theme) => ({
     },
   }));
 
-export default function GlobalData() {
+export default function Records() {
   
     const classes = useStyles();
     const typeGraphyclasses = useStylesTypography();
 
-    const[globalData,setGlobalData] = useState({});
+    const[record,setRecord] = useContext(GlobalContext);//useState({});
+   // const[fetchGlobalApiData] = useContext(GlobalContext);
     const [dataLoading,setDataLoading] = useState(false);
     
     const dateMsg = " As of " +  moment().format("DD-MM-YYYY hh:mm:ss");
+  
+
     useEffect(() => {
-        async function fetchGlobalApiData()
+        
+      async function fetchGlobalApiData()
         {
             const apiResponse = await fetch('https://api.thevirustracker.com/free-api?global=stats');            
            // console.log("API Data: ", apiResponse);
            setDataLoading(true);
             let apiJsonData = await apiResponse.json();
             delete apiJsonData.results[0].source;
-            setGlobalData(apiJsonData.results[0]);            
+            setRecord(apiJsonData.results[0]);            
             //console.log(apiJsonData);
             setDataLoading(false);
         }
         fetchGlobalApiData();
     },[])
-
-
+  
   return (
     <div className={classes.root}>
       <Paper elevation={3} >
         <Typography variant="h2" gutterBottom style = {{color: 'darkgrey'}}>      
-          <CountUp start={0} end={globalData && isNaN(globalData.total_cases ) ? 0 : globalData.total_cases} duration={1.75} separator="," />
+          <CountUp start={0} end={record && isNaN(record.total_cases ) ? 0 : record.total_cases} duration={1.75} separator="," />
         </Typography>
         <div className={typeGraphyclasses.root}>
           <Typography variant="body1" gutterBottom style = {{color: 'darkgrey'}}>
@@ -68,7 +72,7 @@ export default function GlobalData() {
       
       <Paper elevation={3} >
         <Typography variant="h2" gutterBottom style = {{color: 'Blue'}} > 
-         <CountUp start={0} end={globalData && isNaN(globalData.total_unresolved) ? 0 : globalData.total_unresolved} duration={1.75} separator="," />
+         <CountUp start={0} end={record && isNaN(record.total_unresolved) ? 0 : record.total_unresolved} duration={1.75} separator="," />
         </Typography>
         <div className={typeGraphyclasses.root}>
           <Typography variant="body1" gutterBottom  style = {{color: 'Blue'}}>
@@ -79,7 +83,7 @@ export default function GlobalData() {
       
       <Paper elevation={3} >
       <Typography variant="h2" gutterBottom style = {{color: 'Green'}}>
-      <CountUp start={0} end={globalData && isNaN(globalData.total_recovered) ? 0 : globalData.total_recovered} duration={1.75} separator="," />
+      <CountUp start={0} end={record && isNaN(record.total_recovered) ? 0 : record.total_recovered} duration={1.75} separator="," />
       </Typography>
       <div className={typeGraphyclasses.root}>
         <Typography variant="body1" gutterBottom style = {{color: 'Green'}}>
@@ -89,7 +93,7 @@ export default function GlobalData() {
       </Paper>
       <Paper elevation={3} >
       <Typography variant="h2" gutterBottom style = {{color: 'Red'}}>
-      <CountUp start={0} end={globalData && isNaN(globalData.total_deaths) ? 0 : globalData.total_deaths} duration={1.75} separator="," />
+      <CountUp start={0} end={record && isNaN(record.total_deaths) ? 0 : record.total_deaths} duration={1.75} separator="," />
       </Typography>
       <div className={typeGraphyclasses.root}>
         <Typography variant="body1" gutterBottom style = {{color: 'Red'}}> 

@@ -13,6 +13,7 @@ Steps to add the project into Github
   npm install fontsource-roboto
   yarn add react-countup
   npm install --save moment react-moment
+  yarn add axios
 5) push repository
 
  Note: 
@@ -25,17 +26,37 @@ Steps to add the project into Github
 import React from 'react';
 import Header from './components/Header';
 import MainGrid from './components/MainGrid';
+import { GlobalProvider } from './context/GlobalContext';
 
 function App() {
   return (
-      <>
+      <GlobalProvider>
        <Header />
        <MainGrid />
-       </>
+       </GlobalProvider>
   );
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 class App extends React.Component{

@@ -2,7 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import GlobalData from './GlobalData';
+import Records from './Records';
+import CountryDropDown from './CountryDropDown';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,12 +25,13 @@ export default function MainGrid() {
       <Grid container spacing={3}>
         <Grid item xs={4}>
           <Paper className={classes.paper}>
-            <GlobalData />
+            <Records />
           </Paper>
         </Grid>
         <Grid item xs={8}>
           <Paper className={classes.paper}>
               Country Data
+              <CountryDropDown />
           </Paper>
         </Grid>
       </Grid>
