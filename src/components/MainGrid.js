@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Records from './Records';
 import CountryDropDown from './CountryDropDown';
+import BarChart from './BarChart';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,9 +31,12 @@ export default function MainGrid() {
         </Grid>
         <Grid item xs={8}>
           <Paper className={classes.paper}>
-              Country Data
               <CountryDropDown />
           </Paper>
+          <Paper className={classes.paper}>
+              <BarChart />
+          </Paper>
+
         </Grid>
       </Grid>
     </div>

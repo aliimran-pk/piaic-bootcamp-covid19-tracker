@@ -1,4 +1,4 @@
-import React, { useState , useEffect , useContext} from 'react';
+import React, { useContext} from 'react';
 import { GlobalContext } from '../context/GlobalContext';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -33,7 +33,7 @@ export default function Record() {
     const dateMsg = " As of " +  moment().format("DD-MM-YYYY hh:mm:ss");
     const classes = useStyles();
     const typeGraphyclasses = useStylesTypography();
-    const [dataLoading,setDataLoading] = useState(false);
+    //const [dataLoading,setDataLoading] = useState(false);
 
   return (
     <div className={classes.root}>
