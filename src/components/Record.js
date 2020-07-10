@@ -50,15 +50,7 @@ export default function Record() {
             //setDataLoading(false);
         }
           fetchGlobalApiData();
-    },[setRecord]);
-
-
-
-
-
-
-
-
+    },[]);
 
     //const [dataLoading,setDataLoading] = useState(false);
     console.log(record); 
