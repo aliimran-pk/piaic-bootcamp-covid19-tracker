@@ -5,8 +5,7 @@ import Record from './Record';
 
 
 export default function Records() {
-  
-    
+      
     const[record,setRecord] = useContext(GlobalContext);
     console.log(record);
   
@@ -24,7 +23,7 @@ export default function Records() {
             //setDataLoading(false);
         }
           fetchGlobalApiData();
-    },[])
+    },[]);
   
   return (
     <Record />

@@ -1,4 +1,4 @@
-import React, { useContext} from 'react';
+import React, {useEffect,useContext} from 'react';
 import { GlobalContext } from '../context/GlobalContext';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,7 +6,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import CountUp from "react-countup";
 import moment from "moment";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,12 +28,40 @@ const useStylesTypography = makeStyles((theme) => ({
   }));
 
 export default function Record() {
-    const[record,setRecord] = useContext(GlobalContext);
+    //const[record,setRecord] = useContext(GlobalContext);
     const dateMsg = " As of " +  moment().format("DD-MM-YYYY hh:mm:ss");
     const classes = useStyles();
     const typeGraphyclasses = useStylesTypography();
-    //const [dataLoading,setDataLoading] = useState(false);
 
+    const[record,setRecord] = useContext(GlobalContext);
+    console.log(record);
+  
+    useEffect(() => {
+        
+      async function fetchGlobalApiData()
+        {
+            const apiResponse = await fetch('https://api.thevirustracker.com/free-api?global=stats');            
+           // console.log("API Data: ", apiResponse);
+           //setDataLoading(true);
+            let apiJsonData = await apiResponse.json();
+            delete apiJsonData.results[0].source;
+            setRecord(apiJsonData.results[0]);            
+            //console.log(apiJsonData);
+            //setDataLoading(false);
+        }
+          fetchGlobalApiData();
+    },[setRecord]);
+
+
+
+
+
+
+
+
+
+    //const [dataLoading,setDataLoading] = useState(false);
+    console.log(record); 
   return (
     <div className={classes.root}>
       <Paper elevation={3} >

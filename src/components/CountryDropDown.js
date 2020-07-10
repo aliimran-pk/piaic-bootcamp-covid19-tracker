@@ -34,14 +34,16 @@ function handleCountryChange(e)
 const CountryDropdown = () => {
    
    // const[updatedRecords,setUpdatedRecord] = useState();
+   /*
    const testRecord = {
     total_cases: 1000,
     total_unresolved: 2000,
     total_recovered: 3000,
     total_deaths: 5000
-};
-
+    };
+*/
     const[record,setRecord] = useContext(GlobalContext);
+    console.log(record);
     const [ fetchedCountries, setFetchedCountries ] = useState([]);
   
     const onCountryChangeHandler = evnt => {
@@ -77,6 +79,7 @@ const CountryDropdown = () => {
 
     return(
         <div>
+           <p> Select Country </p>
             <FormControl>
                 <NativeSelect onChange={onCountryChangeHandler}>
                     <option value="">Global</option>
