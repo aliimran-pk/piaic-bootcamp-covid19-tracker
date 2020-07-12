@@ -72,7 +72,7 @@ const CountryDropdown = () => {
         }
        
        fetchApi();
-    }, [setFetchedCountries]);
+    }, []);
 
   
 
