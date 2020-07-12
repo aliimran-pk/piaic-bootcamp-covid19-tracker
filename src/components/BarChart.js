@@ -5,6 +5,12 @@ import { GlobalContext } from '../context/GlobalContext';
 function BarChart() {
   // Use State
   const[record,setRecord] = useContext(GlobalContext);
+  console.log(record);
+
+  if (1==2)
+  {
+    setRecord(record);
+  }
   // Barchart
   const Barchart = (
     <Bar
