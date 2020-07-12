@@ -31,7 +31,7 @@ jobs:
       with:
         cmd: install # will run `yarn install` command
         
-    - name: Build React App
+    - name: Build covid19 tracker  React App
       run: yarn build
       env:
           CI: false
